@@ -81,6 +81,6 @@ post '/is_valid_choice' do
   puts '=> choice_id: ' + data['choice_id'].to_s
 
   {
-    valid: is_valid
+    is_valid: is_valid
   }.to_json
 end
