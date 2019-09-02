@@ -1,8 +1,11 @@
 require 'sinatra'
+require 'sinatra/namespace'
 require "sinatra/reloader" if development?
 require "sinatra/json"
-require 'erubis'
-require 'http'
+
+# TODO: add config for
+#       - URLs
+#       - ports
 
 CHOICES = [
   {
@@ -60,27 +63,29 @@ get '/' do
   'tie'
 end
 
-post '/' do
-  request.body.rewind  # in case someone already read it
-  data = JSON.parse request.body.read
-  "Hello player: #{data['player']}, computer: #{data['computer']}!"
-end
+namespace '/api' do
+  post '/compute_winner' do
+    request.body.rewind  # in case someone already read it
+    data = JSON.parse request.body.read
+    "Hello player: #{data['player']}, computer: #{data['computer']}!"
+  end
 
-get '/choices' do
-  content_type :json
-  CHOICES.to_json
-end
+  get '/choices' do
+    content_type :json
+    CHOICES.to_json
+  end
 
-post '/is_valid_choice' do
-  content_type :json
+  post '/is_valid_choice' do
+    content_type :json
 
-  request.body.rewind  # in case someone already read it
-  data = JSON.parse request.body.read
+    request.body.rewind  # in case someone already read it
+    data = JSON.parse request.body.read
 
-  is_valid = valid_choice? data['choice_id'].to_i
-  puts '=> choice_id: ' + data['choice_id'].to_s
+    is_valid = valid_choice? data['choice_id'].to_i
+    puts '=> choice_id: ' + data['choice_id'].to_s
 
-  {
-    is_valid: is_valid
-  }.to_json
+    {
+      is_valid: is_valid
+    }.to_json
+  end
 end
