@@ -40,7 +40,7 @@ Returns JSON with the status `win`, `lose`, or `tie` for each player.
 
 Example POST body:
 
-```json
+```
 {
   "player": choice_id[integer],
   "computer": choice_id[integer]
@@ -49,7 +49,7 @@ Example POST body:
 
 Example JSON Response body:
 
-```json
+```
 {
   "player": (win, loose, tie)[string],
   "computer": (win, loose, tie)[string]
@@ -62,7 +62,7 @@ Returns json array of possible choices.
 
 Example JSON Response body:
 
-```json
+```
 [
   {
     "choice": {
@@ -104,8 +104,8 @@ attackers from sending unintented payloads.
 
 Example JSON Response body:
 
-```json
+```
 {
-  "is_valid": is_valid
+  "is_valid": true
 }
 ```
