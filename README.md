@@ -1,4 +1,4 @@
-# Game Server
+# billups_rpsls_winner_service
 
 ## Overview
 
@@ -29,4 +29,83 @@ bundle install
 
 If installing on remote server, make sure port the default port, 4567 is open.
 (winner_server will require port 4568 to be open by default).
-# billups_rpsls_winner_service
+
+## API
+
+### `POST: /compute_winner`
+
+Expects JSON with two named players as keys, and their choice id as values.
+
+Returns JSON with the status `win`, `lose`, or `tie` for each player.
+
+Example POST body:
+
+```json
+{
+  "player": choice_id[integer],
+  "computer": choice_id[integer]
+}
+```
+
+Example JSON Response body:
+
+```json
+{
+  "player": (win, loose, tie)[string],
+  "computer": (win, loose, tie)[string]
+}
+```
+
+### `GET: /choices`
+
+Returns json array of possible choices.
+
+Example JSON Response body:
+
+```json
+[
+  {
+    "choice": {
+      "id": 1,
+      "name": "rock"
+    }
+  },
+  {
+    "choice": {
+      "id": 2,
+      "name": "paper"
+    }
+  },
+  {
+    "choice": {
+      "id": 3,
+      "name": "scissors"
+    }
+  },
+  {
+    "choice": {
+      "id": 4,
+      "name": "lizard"
+    }
+  },
+  {
+    "choice": {
+      "id": 5,
+      "name": "spock"
+    }
+  }
+]
+```
+
+### `POST: /is_valid_choice`
+
+Returns json with boolean value if the choice is valid. This helps prevent
+attackers from sending unintented payloads.
+
+Example JSON Response body:
+
+```json
+{
+  "is_valid": is_valid
+}
+```
