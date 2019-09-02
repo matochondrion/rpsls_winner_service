@@ -45,13 +45,7 @@ end
 helpers do
 end
 
-
 def get_winner(player_choice_id, computer_choice_id)
-  #
-  response = HTTP.accept(:json).follow(max_hops: 3)
-                 .get(RPSLS_WINNER_SERVER)
-  computer_choice_id
-  'win'
 end
 
 get '/' do
@@ -59,5 +53,12 @@ get '/' do
 end
 
 post '/' do
-  'tie'
+  request.body.rewind  # in case someone already read it
+  data = JSON.parse request.body.read
+  "Hello player: #{data['player']}, computer: #{data['computer']}!"
+end
+
+get '/choices' do
+  content_type :json
+  CHOICES.to_json
 end
