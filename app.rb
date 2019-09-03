@@ -60,14 +60,22 @@ def valid_choice? choice
 end
 
 get '/' do
-  'tie'
+  'winner_service'
 end
 
 namespace '/api' do
   post '/compute_winner' do
+    content_type :json
+
     request.body.rewind  # in case someone already read it
     data = JSON.parse request.body.read
-    "Hello player: #{data['player']}, computer: #{data['computer']}!"
+
+    {
+      'player_choice_id': "#{data['player']}",
+      'computer_choiece_id': "#{data['computer']}",
+      'player': 'win',
+      'computer': 'loose'
+    }.to_json
   end
 
   get '/choices' do
