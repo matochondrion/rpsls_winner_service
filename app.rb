@@ -90,10 +90,6 @@ namespace '/api' do
 
     add_choices_to_players_data! players_data
 
-    puts '=> players_data raw: ', players_data
-    puts '=> players_data to_s: ', players_data.to_s
-    puts '=> players_data to_json: ', players_data.to_json
-    #
     compute_winner(players_data).to_json
   end
 
