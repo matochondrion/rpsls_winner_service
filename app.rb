@@ -63,6 +63,20 @@ def valid_choice? choice
   valid_ids.include? choice
 end
 
+def add_choices_to_players_data! players_data
+  players_data.each { |data|
+    data['choice'] = choiceIdToChoice data['choice_id']
+  }
+end
+
+def choiceIdToChoice choice_id
+  selected_choice = CHOICES.select do |choice|
+    choice[:choice][:id] == choice_id
+  end[0]
+
+  selected_choice[:choice][:name]
+end
+
 get '/' do
   'winner_service'
 end
@@ -72,18 +86,14 @@ namespace '/api' do
     content_type :json
 
     request.body.rewind  # in case someone already read it
-    data = JSON.parse request.body.read
+    players_data = JSON.parse request.body.read
 
-    # choiceIdToChoice data['player']
-    # choiceIdToChoice data['computer']
+    add_choices_to_players_data! players_data
 
-    player_names = data.keys
-
-    players_data = {
-      1 => { name: player_names[0], choice: data[player_names[0]] },
-      2 => { name: player_names[1], choice: data[player_names[1]] }
-    }
-
+    puts '=> players_data raw: ', players_data
+    puts '=> players_data to_s: ', players_data.to_s
+    puts '=> players_data to_json: ', players_data.to_json
+    #
     compute_winner(players_data).to_json
   end
 

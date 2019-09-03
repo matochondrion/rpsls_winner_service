@@ -18,22 +18,22 @@ class R_P_S_L_S
   end
 
   def compute_winner(players_data)
-    player1 = players_data[1]
-    player2 = players_data[2]
+    player1 = players_data[0]
+    player2 = players_data[1]
 
     # TODO: Test that objects and values are truly clones and
     # immutable.
-    results = { 1 => player1.clone, 2 => player2.clone }
+    results = players_data.clone
 
-    if WINNER[player1[:choice]].include? player2[:choice]
-      results[1][:result] = 'win'
-      results[2][:result] = 'lose'
-    elsif WINNER[player2[:choice]].include? player1[:choice]
+    if WINNER[player1['choice']].include? player2['choice']
+      results[0][:result] = 'win'
       results[1][:result] = 'lose'
-      results[2][:result] = 'win'
+    elsif WINNER[player2['choice']].include? player1['choice']
+      results[0][:result] = 'lose'
+      results[1][:result] = 'win'
     else
+      results[0][:result] = 'tie'
       results[1][:result] = 'tie'
-      results[2][:result] = 'tie'
     end
 
     results
