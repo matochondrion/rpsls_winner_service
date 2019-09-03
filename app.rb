@@ -50,10 +50,9 @@ end
 helpers do
 end
 
-def compute_winner(players_choices)
+def compute_winner(players_data)
   winner_resolve = R_P_S_L_S.new
-  winner_resolve.compute_winner players_choices
-  {}
+  winner_resolve.compute_winner players_data
 end
 
 def valid_choice? choice
@@ -75,26 +74,17 @@ namespace '/api' do
     request.body.rewind  # in case someone already read it
     data = JSON.parse request.body.read
 
-    # convertIdToChoice data['player']
-    # convertIdToChoice data['computer']
+    # choiceIdToChoice data['player']
+    # choiceIdToChoice data['computer']
 
-    players_choices = [
-      { id: 1, name: 'player', choice: 'rock' },
-      { id: 2, name: 'computer', choice: 'rock' }
-    ]
+    player_names = data.keys
 
-    compute_winner(players_choices).to_json
+    players_data = {
+      1 => { name: player_names[0], choice: data[player_names[0]] },
+      2 => { name: player_names[1], choice: data[player_names[1]] }
+    }
 
-    # {
-    #   'player_choice_id': "#{data['player']}",
-    #   'computer_choiece_id': "#{data['computer']}",
-    #   'player': 'win',
-    #   'computer': 'loose'
-    # }.to_json
-
-    # {
-    #   'test': 'test'
-    # }.to_json
+    compute_winner(players_data).to_json
   end
 
   get '/choices' do
@@ -109,7 +99,6 @@ namespace '/api' do
     data = JSON.parse request.body.read
 
     is_valid = valid_choice? data['choice_id'].to_i
-    puts '=> choice_id: ' + data['choice_id'].to_s
 
     {
       is_valid: is_valid
