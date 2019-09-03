@@ -58,7 +58,8 @@ Example JSON Response body:
 
 ### `GET: /choices`
 
-Returns json array of possible choices.
+Get all the choices that are usable for the frontend. Returns json array of
+possible choices.
 
 Example JSON Response body:
 
