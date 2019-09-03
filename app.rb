@@ -1,11 +1,13 @@
 require 'sinatra'
 require 'sinatra/namespace'
-require "sinatra/reloader" if development?
-require "sinatra/json"
+require 'sinatra/reloader' if development?
+require 'sinatra/json'
+require_relative 'lib/rock_paper_scissors_lizard_spock.rb'
 
 # TODO: add config for
 #       - URLs
 #       - ports
+#       - fix rubocop complaints
 
 CHOICES = [
   {
@@ -48,7 +50,10 @@ end
 helpers do
 end
 
-def get_winner(player_choice_id, computer_choice_id)
+def compute_winner(players_choices)
+  winner_resolve = R_P_S_L_S.new
+  winner_resolve.compute_winner players_choices
+  {}
 end
 
 def valid_choice? choice
@@ -70,12 +75,26 @@ namespace '/api' do
     request.body.rewind  # in case someone already read it
     data = JSON.parse request.body.read
 
-    {
-      'player_choice_id': "#{data['player']}",
-      'computer_choiece_id': "#{data['computer']}",
-      'player': 'win',
-      'computer': 'loose'
-    }.to_json
+    # convertIdToChoice data['player']
+    # convertIdToChoice data['computer']
+
+    players_choices = [
+      { id: 1, name: 'player', choice: 'rock' },
+      { id: 2, name: 'computer', choice: 'rock' }
+    ]
+
+    compute_winner(players_choices).to_json
+
+    # {
+    #   'player_choice_id': "#{data['player']}",
+    #   'computer_choiece_id': "#{data['computer']}",
+    #   'player': 'win',
+    #   'computer': 'loose'
+    # }.to_json
+
+    # {
+    #   'test': 'test'
+    # }.to_json
   end
 
   get '/choices' do
