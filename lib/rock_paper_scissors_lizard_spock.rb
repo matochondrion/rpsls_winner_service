@@ -39,19 +39,3 @@ class R_P_S_L_S
     results
   end
 end
-
-# players_choices = [
-#   { id: 1, name: 'player', choice: 'rock' },
-#   { id: 2, name: 'computer', choice: 'paper' }
-# ]
-
-# resolver = R_P_S_L_S.new
-# puts resolver.compute_winner(players_choices)
-
-# player1 = { name: 'player', choice: 'rock' }
-# player2 = { name: 'computer', choice: 'scissors' }
-
-# game = R_P_S_L_S.new({},{})
-
-# puts game.compute_winner(player1, player2)
-
