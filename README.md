@@ -2,7 +2,8 @@
 
 ## Overview
 
-The `winner_service` handles much of the "Rock Paper Scissors Lizard Spock"
+The `winner_service` handles much of the ["Rock Paper Scissors Lizard
+Spock"](http://www.samkass.com/theories/RPSSL.html)
 game logic and data. It keeps track of the valid choices, checks if a choice is
 valid, and resolves a winner per the "Rock Paper Scissors Lizard Spock" game
 rules. All of this runs on an individual micro-service server, with the
