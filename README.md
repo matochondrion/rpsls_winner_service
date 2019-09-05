@@ -12,12 +12,12 @@ following API endpoints.
 
 ### Installation
 
-Ruby Version: 2.6.4
+Ruby Version: 2.6.3
 
 You may want to use the [RVM Ruby Version Manager](https://rvm.io/rvm/install)
 to install Ruby version 2.6.3.
 
-- First, install bundler, if you haven't:
+- First, install bundler if you don't already have it:
 
 ```
 gem install bundler
@@ -136,4 +136,5 @@ Example JSON Response body:
 
 - Impliment a test suite for all endpoints and functions.
 - Refactor code to be cleaner, better DRY implimentations, etc.
+- Include type checking for request sent to the API, for security.
 
