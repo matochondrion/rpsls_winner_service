@@ -135,7 +135,10 @@ Example JSON Response body:
 
 ## ToDo
 
-- Impliment a test suite for all endpoints and functions.
-- Refactor code to be cleaner, better DRY implimentations, etc.
+- Implement a config file or ENV variables to make setting the
+  `winner_service` URL simpler. Currently this setup needs to be done by hand
+  in several places.
+- Implement a test suite for all endpoints and functions.
 - Include type checking for request sent to the API, for security.
+- Refactor code to be cleaner, better DRY implementations, etc.
 
