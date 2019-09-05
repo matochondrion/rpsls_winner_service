@@ -1,65 +1,51 @@
-# billups_rpsls_winner_service
+# RPSLS winner_service
 
 ## Overview
 
+The `winner_service` handles much of the "Rock Paper Scissors Lizard Spock"
+game logic and data. It keeps track of the valid choices, checks if a choice is
+valid, and resolves a winner per the "Rock Paper Scissors Lizard Spock" game
+rules. All of this runs on an individual micro-service server, with the
+following API endpoints.
+
 ## Setup
-
-### Ruby Version: 2.6.4
-
-You may want to ues the [RVM Ruby Version Manager](https://rvm.io/rvm/install)
-
-to install Ruby version 2.6.3.
 
 ### Installation
 
-First, install bundler, if you haven’t:
+Ruby Version: 2.6.4
+
+You may want to use the [RVM Ruby Version Manager](https://rvm.io/rvm/install)
+to install Ruby version 2.6.3.
+
+- First, install bundler, if you haven't:
 
 ```
 gem install bundler
 ```
 
-Install Sinatra and dependencies:
+- Install Sinatra Dependencies:
 
-Note, when using rvm, you may need to ues `rvmsudo` instead of `sudo`
-when running `bundle install`.
+If accessing a remote server instead of `localhost`, make sure port 4568 is open
+to outside traffic as this service uses port 4568 by default.
+
+When using rvm (Ruby Version Manager), you may need to use `rvmsudo` instead of
+`sudo` when running `bundle install`.
 
 ```
 bundle install
 ```
 
-If installing on remote server, make sure port the default port, 4567 is open.
-(winner_server will require port 4568 to be open by default).
+- Start Sinatra App
+
+```
+bundle exec ruby app.rb
+```
 
 ## API
 
-### `POST: /compute_winner`
-
-Expects JSON with two named players as keys, and their choice id as values.
-
-Returns JSON with the status `win`, `lose`, or `tie` for each player.
-
-Example POST body:
-
-```
-{
-  "player": choice_id[integer],
-  "computer": choice_id[integer]
-}
-```
-
-Example JSON Response body:
-
-```
-{
-  "player": (win, loose, tie)[string],
-  "computer": (win, loose, tie)[string]
-}
-```
-
 ### `GET: /choices`
 
-Get all the choices that are usable for the frontend. Returns json array of
-possible choices.
+Returns an array of possible choice objects, their names, and id's.
 
 Example JSON Response body:
 
@@ -110,3 +96,44 @@ Example JSON Response body:
   "is_valid": true
 }
 ```
+
+### `POST: /compute_winner`
+
+Accepts JSON with two named players as keys, and their choice id as values.
+
+Returns JSON array of an object for each player, with the status `win`, `lose`,
+or `tie` for each player.
+
+Example POST body:
+
+```
+{
+  "player": choice_id[integer],
+  "computer": choice_id[integer]
+}
+```
+
+Example JSON Response body:
+
+```
+[
+  {
+    "choice": "spock",
+    "choice_id": 5,
+    "name": "player",
+    "result": "lose"
+  },
+  {
+    "choice": "lizard",
+    "choice_id": 4,
+    "name": "computer",
+    "result": "win"
+  }
+]
+```
+
+## ToDo
+
+- Impliment a test suite for all endpoints and functions.
+- Refactor code to be cleaner, better DRY implimentations, etc.
+
